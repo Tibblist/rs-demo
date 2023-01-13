@@ -45,6 +45,7 @@ const validateStageData = (data: Record<string, boolean>) => {
   return Object.keys(data).every((key) => data[key]);
 };
 
+//TODO Styling is somewhat wonky but basically adding margin and fixing some alignments would solve most of it + some custom icons and themeing
 const App = () => {
   const [data, setData] = useState(createDataObjectFromStages(stagesObj));
   const [randomFact, setRandomFact] = useState("");
@@ -62,12 +63,18 @@ const App = () => {
         const isValid = stagesObj.stages
           .slice(0, idx)
           .every((stageCheck) => data[stageCheck.category].isValid); //TODO memoize so you don't have to check over entire array up to idx each time
+        const isComplete = data[stage.category].isValid;
 
         return (
           <Grid item>
             <Grid container direction="column" alignItems="flex-start">
               <Grid item>
                 <Typography variant="h3">{stage.category}</Typography>
+                <Typography>
+                  <span style={{ fontSize: "24px", color: "grey" }}>
+                    {isValid && isComplete ? " (Completed)" : ""}
+                  </span>
+                </Typography>
               </Grid>
               <Grid item>
                 <FormGroup>
